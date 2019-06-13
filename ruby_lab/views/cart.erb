@@ -1,0 +1,19 @@
+<h4 style="margin-top: 1%">Покупки:</h4>
+<hr>
+
+<% if !@cart.empty?%>
+    <% @cart.values.each do |train| %>
+        <div class="card" style="margin-top: 2%">   
+
+          <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>
+          <div class="card-body">
+            <h5 class="card-title"><%= train.d_time + " ------> " + train.a_time %></h5>
+            <p class="card-text"><%= train.d_date %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= train.a_date %></p>
+            <div class="button-group row">
+                <a href="#" class="btn btn-primary" style="margin-left: 1%">Оплатить</a>
+                <a href="/cart/del/<%= train.id %>" class="btn btn-primary" style="margin-left: 1%">Удалить</a>
+            </div>
+          </div>
+        </div>
+    <% end%>
+<% end%>

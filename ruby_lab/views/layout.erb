@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <title>Trains</title>
+    </head>
+    <body>
+
+ <nav class="navbar navbar-expand-lg bg-dark" >
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="btn btn-outline-success "  href="/tickets" >Билеты</a>
+      </li>   
+      <% if @user.to_s == 'admin'%>
+        <a class="flex-sm-fill text-sm-center nav-link active" type="link" href="/trains">Поезда</a>
+      <% end%>
+        <a class="flex-sm-fill text-sm-center nav-link " href="/cart">Покупки</a>  
+        <a class="flex-sm-fill text-sm-center nav-link " href="#">Опции</a> 
+      </li>
+    </ul>
+    
+     <% if @user %>
+      <p style="margin-right: 2%; color: White">Вы вошли под ником: <%= @user.to_s %></p>
+    <% end %>
+
+    <form class="form-inline my-2 my-lg-0">
+    <% if @user %>
+      <a href="/unlogin" class="btn btn-outline-success my-2 my-sm-0" style="color: White">выход</a>
+    <% else %>
+      <a href="/login" class="btn btn-outline-success my-2 my-sm-0" style="color: White">вход</a>
+    <% end %>
+    </form>
+
+  </div>
+</nav>
+
+
+    <div class="container">
+        <%= yield %>
+    </div>
+
+    <script src="/js/bootstrap.bundle.js"></script>
+    </body>
+</html>
