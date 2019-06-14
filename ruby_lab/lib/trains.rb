@@ -26,7 +26,4 @@ class Trains
     def has?(id)
         @trains.key?(id)
     end
-
-    def search(from, to, date_from, date_to, prise_from, prise_unto)
-    end
 end

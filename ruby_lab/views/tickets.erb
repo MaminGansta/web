@@ -1,4 +1,13 @@
 <form class="needs-validation" method="post" style="margin-top: 1%">
+
+<% if @errors %>
+  <div class="alert alert-warning">
+  <% @errors.each do |error|%>
+    <%= error %><br>
+  <% end%>
+  </div>
+<% end %>
+
   <div class="form-row">
     <div class="col-md-3 mb-3">
       <label for="validationCustom01">Откуда:</label>
@@ -31,14 +40,14 @@
     <div class="form-row">
     <div class="col-md-3 mb-3">
       <label for="validationServer04">&nbsp;Цена:</label>
-      <input type="text" class="form-control" id="prise_from" name="prise_from" placeholder="От" >
+      <input type="text" class="form-control" id="price_from" name="price_from" placeholder="От" >
       <div class="invalid-feedback">
         Please provide a valid .
       </div>
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationServer05">&nbsp;</label>
-      <input type="text" class="form-control" id="prise_unto" name="prise_unto" placeholder="До" >
+      <input type="text" class="form-control" id="price_unto" name="price_unto" placeholder="До" >
       <div class="invalid-feedback">
         Please provide a valid .
       </div>
@@ -50,15 +59,20 @@
 </form>
 
 <hr>
+<% if @trains%>
+  <% @trains.each do |train| %>
+      <div class="card" style="margin-top: 2%">
 
-<% @trains.each do |train| %>
-    <div class="card" style="margin-top: 2%">
-
-      <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>
-      <div class="card-body">
+        <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>
+        <div class="card-body">
         <h5 class="card-title"><%= train.d_time + " ------> " + train.a_time %></h5>
         <p class="card-text"><%= train.d_date %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= train.a_date %></p>
-        <a href="/cart/add/<%= "#{train.id}" %>" class="btn btn-primary">Купить <%= "#{train.price}p" %></a>
+        <% if @user%>
+          <a href="/cart/add/<%= "#{train.id}" %>" class="btn btn-primary">Купить <%= "#{train.price}p" %></a>
+        <% else%>
+          <a href="/login" class="btn btn-primary">Купить <%= "#{train.price}p" %></a>
+        <% end%>
       </div>
     </div>
+  <% end%>
 <% end%>

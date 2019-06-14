@@ -1,8 +1,8 @@
 <h4 style="margin-top: 1%">Покупки:</h4>
 <hr>
 
-<% if !@cart.empty?%>
-    <% @cart.values.each do |train| %>
+<% if @cart%>
+    <% @cart.each do |train| %>
         <div class="card" style="margin-top: 2%">   
 
           <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>

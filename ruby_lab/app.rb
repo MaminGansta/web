@@ -4,12 +4,14 @@ require 'time'
 require_relative 'lib/train'
 require_relative 'lib/auxiliary_items/user_list'
 require_relative 'lib/auxiliary_items/user'
+require_relative 'lib/auxiliary_items/checker'
+require_relative 'lib/auxiliary_items/search'
 
 configure do
     enable :sessions
     set :trains, @trains = Trains.new
-    @trains.add(Train.new('106', 'Ярославль', 'Москва', '15:00', '19:07', '02.06', '02.06', 800))
-    set :cart, Hash.new{|hash, key| hash[key] = Trains.new}
+    @trains.add(Train.new('106', 'Ярославль', 'Москва', '15:00', '19:07', '02.06', '02.06', '800'))
+    set :shopping_cart, Hash.new{|hash, key| hash[key] = Trains.new}
     set :user_list, @user_list = UserList.new
     @user_list.add(User.new('admin', 'admin'))
 end
@@ -30,8 +32,15 @@ get '/tickets' do
 end
 
 post '/tickets' do
-    @trains = settings.trains.search(params['from'], params['to'], params['date_from'], 
-                             params['date_to'], params['prise_from'], params['prise_unto'])
+    @time = Time.new
+    p params.values
+    @errors = Checker.check_ticket_search_validasity(params['from'], params['to'], params['date_from'], 
+                                           params['date_to'], params['price_from'], params['price_unto'])
+    p @errors
+    if !@errors
+        @trains = Search.search_tickets(settings.trains, params['from'], params['to'], params['date_from'], 
+                             params['date_to'], params['price_from'], params['price_unto'])
+    end
     erb :tickets
 end
 
@@ -62,17 +71,19 @@ post '/trains/new' do
 end
 
 get '/cart' do
-    @cart = settings.cart
+    @cart = settings.shopping_cart[@user]
     erb :cart
 end
 
 get '/cart/add/:train_id' do |train_id|
-    settings.cart['train_id'] = settings.trains.get(train_id)
+    cart = settings.shopping_cart[@user] 
+    cart.add(settings.trains.get(train_id))
     redirect('/cart')
 end
 
 get '/cart/del/:train_id' do |train_id|
-    settings.cart.delete('train_id')
+    cart = settings.shopping_cart[@user]
+    cart.del(train_id)
     redirect('/cart')
 end
 
