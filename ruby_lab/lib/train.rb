@@ -4,7 +4,7 @@ class Train
 
     attr_reader :number, :depart, :arrived, :d_time, :a_time, :d_date, :a_date,  :id, :price
 
-    def initialize(number, depart, arrived, d_time, a_time, d_date, a_date, price) #start time, arrived time
+    def initialize(number, depart, arrived, d_date, a_date, d_time, a_time, price) #start time, arrived time
         @number = number
         @depart = depart
         @arrived = arrived
@@ -14,10 +14,6 @@ class Train
         @a_date = a_date
         @price = price
         @id = SecureRandom.uuid
-    end
-
-    def check_fields
-        ""
     end
 
 end

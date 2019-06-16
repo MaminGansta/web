@@ -1,0 +1,56 @@
+
+<% if @errors %>
+  <div class="alert alert-warning">
+  <% @errors.each do |error|%>
+    <%= error %><br>
+  <% end%>
+  </div>
+<% end %>
+
+
+<form style="margin-top: 2%" method="post">
+    <div class="form-check" style="margin-top: 1%" method="post">
+      <input class="form-check-input" type="radio" name="radio" id="exampleRadios1" value="option1" checked>
+      <label class="form-check-label" for="exampleRadios1">
+        Вывести список всех городов, в которые можно приехать поездом, но невозможно уехать.
+      </label>
+    </div>
+    <div class="form-check" style="margin-top: 1%">
+      <input class="form-check-input" type="radio" name="radio" id="exampleRadios2" value="option2">
+      <label class="form-check-label" for="exampleRadios2">
+        Вывести список всех городов с железнодорожным сообщением.
+      </label>
+    </div>
+    <div class="form-check disabled" style="margin-top: 1%">
+      <input class="form-check-input" type="radio" name="radio" id="exampleRadios3" value="option3" >
+      <label class="form-check-label" for="exampleRadios3">
+        По названию города и дате выяснить, какое максимальное число одновременно работающих путей необходимо в этот день, если перед отправлением и после прибытия поезда стоят ровно полчаса.
+      </label>
+    </div>
+
+    <div style="margin-top: 1%" class="form-group row">
+    <label for="inputPassword3" class=" col-form-label">Город:</label>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="input1" name="input1" placeholder="Ярославль">
+    </div>
+
+     <label for="inputPassword3" style="margin-left: 2%" class=" col-form-label">Дата:</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" id="input2" name="input2" placeholder="02.5">
+    </div>
+  </div>
+
+    <button style="margin-top: 2%" type="submit" class="btn btn-primary">Показать</button>
+</form>
+
+<hr>
+
+<% if @citys%>
+  <% @citys.each do |town| %>
+      <div class="card" style="margin-top: 2%">
+        <div class="card-body">
+        <h5 class="card-title"><%= town %></h5>
+      </div>
+    </div>
+  <% end%>
+<% end%>

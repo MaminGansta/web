@@ -28,4 +28,43 @@ module Search
         end
         new_trains
     end
+
+    def self.search_dead_end(trains)
+        citys_end = []
+        citys_start = []
+        trains.each do |train|
+        citys_end << train.arrived if !citys_end.include?(train.arrived)
+        citys_start << train.depart if !citys_end.include?(train.depart)
+        end
+
+        citys_start.each do |town|
+            citys_end.delete(town)
+        end
+
+        if citys_end.empty?
+            return nil
+        else
+            return citys_end
+        end
+    end
+
+    def self.citys_wits_trains(trains)
+        citys = []
+        trains.each do |train|
+            citys << train.depart if !citys.include?(train.depart)
+            citys << train.arrived if !citys.include?(train.arrived)
+        end
+
+        if citys.empty?
+            return nil
+        else
+            return citys
+        end
+    end
+
+    def how_railways_need(trains, city, date)
+        trains.each do |train|
+            
+        end
+    end
 end

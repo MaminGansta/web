@@ -10,7 +10,7 @@ require_relative 'lib/auxiliary_items/search'
 configure do
     enable :sessions
     set :trains, @trains = Trains.new
-    @trains.add(Train.new('106', 'Ярославль', 'Москва', '15:00', '19:07', '02.06', '02.06', '800'))
+    @trains.add(Train.new('106', 'Ярославль', 'Москва', '02.06', '02.06', '15:00', '19:07', '800'))
     set :shopping_cart, Hash.new{|hash, key| hash[key] = Trains.new}
     set :user_list, @user_list = UserList.new
     @user_list.add(User.new('admin', 'admin'))
@@ -33,10 +33,8 @@ end
 
 post '/tickets' do
     @time = Time.new
-    p params.values
-    @errors = Checker.check_ticket_search_validasity(params['from'], params['to'], params['date_from'], 
+    @errors = Checker.check_ticket_search_validaty(params['from'], params['to'], params['date_from'], 
                                            params['date_to'], params['price_from'], params['price_unto'])
-    p @errors
     if !@errors
         @trains = Search.search_tickets(settings.trains, params['from'], params['to'], params['date_from'], 
                              params['date_to'], params['price_from'], params['price_unto'])
@@ -60,9 +58,12 @@ end
 
 post '/trains/new' do
     @train = Train.new(params['input1'], params['input2'], params['input3'], params['input4'],
-                        params['input5'], params['input6'], params['input7'], params['input8'],)
-    @errors = @train.check_fields
-    if @errors.empty?
+                        params['input5'], params['input6'], params['input7'], params['input8'])
+    @errors = Checker.check_new_train_fields(params['input1'], params['input2'], params['input3'], params['input4'],
+                                params['input5'], params['input6'], params['input7'], params['input8']) 
+    p params
+    p @errors
+    if !@errors
         settings.trains.add(@train)
         redirect('/trains')
     else
@@ -72,6 +73,10 @@ end
 
 get '/cart' do
     @cart = settings.shopping_cart[@user]
+    @cart.each do |train|
+        @cart.del(train.id) if !settings.trains.has?(train.id)
+    end
+    settings.shopping_cart[@user] = @cart
     erb :cart
 end
 
@@ -85,6 +90,27 @@ get '/cart/del/:train_id' do |train_id|
     cart = settings.shopping_cart[@user]
     cart.del(train_id)
     redirect('/cart')
+end
+
+get '/options' do
+    erb :options
+end
+
+post '/options' do
+    p params
+    if params['radio'] == 'option1'
+        @citys = Search.search_dead_end(settings.trains)
+    end
+    if params['radio'] == 'option2'
+        @citys = Search.citys_wits_trains(settings.trains)
+    end
+    if params['radio'] == 'option3'
+        @errors = Checker.ckeck_option_fields(params['input1'], params['input2'])
+        break if @errors
+        @railways_in_city = Search.how_railways_need(settings.trains, params['input1'], params['input2'])
+    end
+    @city = @railways_in_city
+    erb :options
 end
 
 get '/login' do
