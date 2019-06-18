@@ -1,19 +1,33 @@
-require 'sinatra'
-require_relative 'lib/trains'
 require 'time'
+require 'pstore'
+require_relative 'lib/trains'
 require_relative 'lib/train'
 require_relative 'lib/auxiliary_items/user_list'
 require_relative 'lib/auxiliary_items/user'
 require_relative 'lib/auxiliary_items/checker'
 require_relative 'lib/auxiliary_items/search'
 
+store = PStore.new('data/data.pstore')
+
+store.transaction(true) do
+    @trains = store[:trains]
+    @user_list = store[:user_list]
+end
+
+at_exit do
+    store.transaction do
+        store[:trains] = @trains
+        store[:user_list] = @user_list
+      end
+end
+
+require 'sinatra'
+
 configure do
     enable :sessions
-    set :trains, @trains = Trains.new
-    @trains.add(Train.new('106', 'Ярославль', 'Москва', '02.06', '02.06', '15:00', '19:07', '800'))
-    set :shopping_cart, Hash.new{|hash, key| hash[key] = Trains.new}
-    set :user_list, @user_list = UserList.new
-    @user_list.add(User.new('admin', 'admin'))
+    set :trains, @trains 
+    set :shopping_cart, @shopping_cart = Hash.new{|hash, key| hash[key] = Trains.new}
+    set :user_list, @user_list
 end
 
 before do
@@ -61,8 +75,6 @@ post '/trains/new' do
                         params['input5'], params['input6'], params['input7'], params['input8'])
     @errors = Checker.check_new_train_fields(params['input1'], params['input2'], params['input3'], params['input4'],
                                 params['input5'], params['input6'], params['input7'], params['input8']) 
-    p params
-    p @errors
     if !@errors
         settings.trains.add(@train)
         redirect('/trains')
@@ -97,19 +109,20 @@ get '/options' do
 end
 
 post '/options' do
-    p params
+    @out = nil
+    @errors = nil
     if params['radio'] == 'option1'
-        @citys = Search.search_dead_end(settings.trains)
+        @out = Search.search_dead_end(settings.trains)
     end
     if params['radio'] == 'option2'
-        @citys = Search.citys_wits_trains(settings.trains)
+        @out = Search.citys_wits_trains(settings.trains)
     end
     if params['radio'] == 'option3'
         @errors = Checker.ckeck_option_fields(params['input1'], params['input2'])
         break if @errors
-        @railways_in_city = Search.how_railways_need(settings.trains, params['input1'], params['input2'])
-    end
-    @city = @railways_in_city
+        railways_in_city = Search.how_railways_need(settings.trains, params['input1'], params['input2'])
+        @out = [railways_in_city]
+    end   
     erb :options
 end
 

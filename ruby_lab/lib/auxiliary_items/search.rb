@@ -9,7 +9,6 @@ module Search
         trains.each do |train|
             next if train.depart != from && train.arrived != to
             next if Checker.date_compare(train.d_date, date_from) == -1
-            p Checker.date_compare(train.d_date, date_from)
             if !date_to.empty?
                 next if Checker.date_compare(train.a_date, date_to) == 1
             end
@@ -17,8 +16,6 @@ module Search
             if !price_from.empty?
                 next if train.price.to_i <= price_from.to_i
             end
-
-            p price_from
 
             if !price_unto.empty?
                 next if train.price.to_i >= price_unto.to_i
@@ -34,7 +31,7 @@ module Search
         citys_start = []
         trains.each do |train|
         citys_end << train.arrived if !citys_end.include?(train.arrived)
-        citys_start << train.depart if !citys_end.include?(train.depart)
+        citys_start << train.depart if !citys_start.include?(train.depart)
         end
 
         citys_start.each do |town|
@@ -62,9 +59,41 @@ module Search
         end
     end
 
-    def how_railways_need(trains, city, date)
+    def self.how_railways_need(trains, city, date)
+        valid_trains = []
         trains.each do |train|
-            
+            valid_trains << train if (train.depart == city && Checker.date_compare(train.d_date, date) == 0 ) || (Checker.date_compare(train.a_date, date) == 0 && city == train.arrived)
         end
+
+        if valid_trains.any?
+            day_time = Array.new(1440){ |index| 0 }
+            count = 1
+            flag_for_count = false
+
+            valid_trains.each do |train|
+                if train.depart == city
+                    time = train.d_time.split(':')
+                    time = time[0].to_i * 60 + time[1].to_i
+                    for i in 0..30
+                        flag_for_count = true if day_time[time - i] == 1
+                        day_time[time - i] = 1
+                    end
+                    count += 1 if flag_for_count
+                    flag_for_count = false
+                else
+                    time = train.a_time.split(':')
+                    time = time[0].to_i * 60 + time[1].to_i
+                    for i in 0..30
+                        flag_for_count = true if day_time[time + i] == 1
+                        day_time[time - i] = 1
+                    end
+                    count += 1 if flag_for_count
+                    flag_for_count = false
+                end
+            end
+        else
+            return 0
+        end
+        return count
     end
 end

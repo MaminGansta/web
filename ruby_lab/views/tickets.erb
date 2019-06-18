@@ -11,21 +11,21 @@
   <div class="form-row">
     <div class="col-md-3 mb-3">
       <label for="validationCustom01">Откуда:</label>
-      <input type="text" class="form-control" id="from" name="from" placeholder="Ярославль" value="" required>
+      <input type="text" class="form-control" id="from" name="from" placeholder="Ярославль(обязательно)" value="" required>
       <div class="valid-feedback">
         Ок!
       </div>
     </div>
     <div class="col-md-3 mb-3">
       <label for="validationCustom02">Куда:</label>
-      <input type="text" class="form-control" id="to" name="to" placeholder="Москва" value="" required>
+      <input type="text" class="form-control" id="to" name="to" placeholder="Москва(обязательно)" value="" required>
       <div class="valid-feedback">
         Ок!
       </div>
     </div>
     <div class="col-md-2 mb-2">
       <label for="validationServer04">Интервал дат:</label>
-      <input type="text" class="form-control" id="date_from" name="date_from" placeholder="<%= "#{@time.day}.#{@time.month}" %>" required>
+      <input type="text" class="form-control" id="date_from" name="date_from" placeholder="<%= "#{@time.day}.#{@time.month}" %>(обязательно)" required>
       <div class="invalid-feedback">
         Please provide a valid .
       </div>

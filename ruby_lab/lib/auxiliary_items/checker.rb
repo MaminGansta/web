@@ -45,9 +45,6 @@ module Checker
         day_mont1 = date1.split('.')
         day_mont2 = date2.split('.')
 
-        p date1
-        p date2
-
         return 1 if day_mont1[1].to_i > day_mont2[1].to_i
         return -1 if day_mont1[1].to_i < day_mont2[1].to_i
         return 1 if day_mont1[0].to_i > day_mont2[0].to_i
@@ -78,7 +75,7 @@ module Checker
 
     def self.ckeck_option_fields(city, date)
         errors = []
-        if (from =~ /[а-я]+/i) == nil || (to =~ /[а-я]+/i) == nil
+        if (city =~ /[а-я]+/i) == nil 
             errors << 'неправильно указан город'
         end
 

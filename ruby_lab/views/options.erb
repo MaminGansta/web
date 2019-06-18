@@ -45,11 +45,11 @@
 
 <hr>
 
-<% if @citys%>
-  <% @citys.each do |town| %>
+<% if @out%>
+  <% @out.each do |item| %>
       <div class="card" style="margin-top: 2%">
         <div class="card-body">
-        <h5 class="card-title"><%= town %></h5>
+        <h5 class="card-title"><%= item %></h5>
       </div>
     </div>
   <% end%>

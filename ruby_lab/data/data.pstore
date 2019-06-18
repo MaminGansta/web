@@ -1,0 +1,18 @@
+{:trainso:Trains:@trains{I")bd9b4b20-021b-4ddc-9b73-f301f8feea3b:EFo:
+Train:@numberI"106;T:@departI"Ярославль;T:@arrivedI"Москва;T:@d_timeI"
+15:00;T:@a_timeI"
+19:07;T:@d_dateI"
+02.06;T:@a_dateI"
+02.06;T:@priceI"800;T:@idI")bd9b4b20-021b-4ddc-9b73-f301f8feea3b;FI")9d1979c2-842d-43d1-8f6b-da4b7c7c08cd;Fo;	;
+I"108;T;I"Москва;T;I"Ярославль;T;I"
+13:00;T;I"
+14:45;T;I"2.6;T;I"2.6;T;I"750;T;I")9d1979c2-842d-43d1-8f6b-da4b7c7c08cd;FI")439d0687-2a92-4ddf-a8ed-ad0f01ba2ecc;Fo;	;
+I"43;T;I"Ярославль;T;I"Тутаев;T;I"
+15:10;T;I"
+13:15;T;I"2.6;T;I"2.7;T;I"	2100;T;I")439d0687-2a92-4ddf-a8ed-ad0f01ba2ecc;F:user_listo:UserList:
+@list{I")c3d81aff-31e3-4a81-b5dc-50738cc0163d;Fo:	User:
+@nameI"
+admin;T:@passwordI"
+admin;T;I")c3d81aff-31e3-4a81-b5dc-50738cc0163d;FI")d990cc00-dae5-4cea-9f90-5eba84825946;Fo;;I"
+admin;T;I"
+admin;T;I")d990cc00-dae5-4cea-9f90-5eba84825946;F:shopping_cart0
