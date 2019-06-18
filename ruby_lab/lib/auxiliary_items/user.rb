@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class User
@@ -9,15 +11,15 @@ class User
     @id = SecureRandom.uuid
   end
 
-  def ==(user)
-    if @name == user.name && @password == user.password
-        return true
-    else 
-        return false
+  def ==(other_user)
+    if @name == other_user.name && @password == other_user.password
+      true
+    else
+      false
     end
   end
 
   def to_s
-    "#{@name}"
+    @name.to_s
   end
 end
