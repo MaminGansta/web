@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-06-21T13:02:27+03:00">2019-06-21T13:02:27+03:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-06-21T20:18:08+03:00">2019-06-21T20:18:08+03:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -747,25 +747,25 @@
         <li class="covered" data-hits="1" data-linenumber="100">
           <span class="hits">1</span>
           
-          <code class="ruby">  @train = Train.new(params[&#39;input1&#39;], params[&#39;input2&#39;], params[&#39;input3&#39;], params[&#39;input4&#39;],</code>
+          <code class="ruby">  @train = Train.new(params[&#39;number&#39;], params[&#39;from&#39;], params[&#39;to&#39;], params[&#39;d_date&#39;],</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="101">
           
           
-          <code class="ruby">                     params[&#39;input5&#39;], params[&#39;input6&#39;], params[&#39;input7&#39;], params[&#39;input8&#39;])</code>
+          <code class="ruby">                     params[&#39;a_date&#39;], params[&#39;d_time&#39;], params[&#39;a_time&#39;], params[&#39;price&#39;])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="102">
           <span class="hits">1</span>
           
-          <code class="ruby">  @errors = Checker.check_new_train_fields(params[&#39;input1&#39;], params[&#39;input2&#39;], params[&#39;input3&#39;], params[&#39;input4&#39;],</code>
+          <code class="ruby">  @errors = Checker.check_new_train_fields(params[&#39;number&#39;], params[&#39;from&#39;], params[&#39;to&#39;], params[&#39;d_date&#39;],</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="103">
           
           
-          <code class="ruby">                                           params[&#39;input5&#39;], params[&#39;input6&#39;], params[&#39;input7&#39;], params[&#39;input8&#39;])</code>
+          <code class="ruby">                                           params[&#39;a_date&#39;], params[&#39;d_time&#39;], params[&#39;a_time&#39;], params[&#39;price&#39;])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="104">
@@ -1005,7 +1005,7 @@
         <li class="covered" data-hits="1" data-linenumber="143">
           <span class="hits">1</span>
           
-          <code class="ruby">    @errors = Checker.ckeck_option_fields(params[&#39;input1&#39;], params[&#39;input2&#39;])</code>
+          <code class="ruby">    @errors = Checker.ckeck_option_fields(params[&#39;city&#39;], params[&#39;date&#39;])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="144">
@@ -1017,7 +1017,7 @@
         <li class="covered" data-hits="1" data-linenumber="145">
           <span class="hits">1</span>
           
-          <code class="ruby">      railways_in_city = Search.how_railways_need(settings.trains, params[&#39;input1&#39;], params[&#39;input2&#39;])</code>
+          <code class="ruby">      railways_in_city = Search.how_railways_need(settings.trains, params[&#39;city&#39;], params[&#39;date&#39;])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="146">
