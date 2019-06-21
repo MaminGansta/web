@@ -3,26 +3,21 @@
 # check some information from fields
 module Checker
   def self.check_ticket_search_validaty(from, to, date_from, date_to, price_from, price_unto)
-    @errors = []
-
-    @errors << 'неправильно указан город' if (from =~ /[а-я]+/i).nil? || (to =~ /[а-я]+/i).nil?
-
-    @errors << 'неправильно указана дата в графе от' if !date_checker(date_from)
-
-    if !date_to.empty?
-      @errors << 'неправильно указана дата  в графе до' if !date_checker(date_to)
+    errors = []
+    errors << 'неправильно указан город' if (from =~ /[а-я]+/i).nil? || (to =~ /[а-я]+/i).nil?
+    errors << 'неправильно указана дата в графе от' if !date_checker(date_from)
+    unless date_to.empty?
+      errors << 'неправильно указана дата  в графе до' if !date_checker(date_to)
     end
-
-    if !price_from.empty?
-      @errors << 'неправильно указана цена в графе От' if (price_from =~ /^[\d]+$/).nil?
+    unless price_from.empty?
+      errors << 'неправильно указана цена в графе От' if (price_from =~ /^[\d]+$/).nil?
     end
-
-    if !price_unto.empty?
-      @errors << 'неправильно указана цена в графе До' if (price_unto =~ /^[\d]+$/).nil?
+    unless price_unto.empty?
+      errors << 'неправильно указана цена в графе До' if (price_unto =~ /^[\d]+$/).nil?
     end
-
     return nil if @errors.empty?
-    return @errors 
+
+    errors
   end
 
   def self.date_checker(date)
@@ -63,7 +58,8 @@ module Checker
     errors << 'неправильно указано время' if (d_time =~ /^[\d]+:[\d]+$/).nil? || (d_time =~ /^[\d][\d]?:[\d][\d]?$/).nil?
 
     return nil if errors.empty?
-    return errors
+
+    errors
   end
 
   def self.ckeck_option_fields(city, date)
@@ -72,7 +68,8 @@ module Checker
 
     errors << 'неправильно указана дата' if !date_checker(date)
 
-    return nil if errors.empty?     
-    return errors    
+    return nil if errors.empty?
+
+    errors
   end
 end
