@@ -17,9 +17,12 @@ store.transaction(true) do
 end
 
 at_exit do
-  store.transaction do
-    store[:trains] = @trains
-    store[:user_list] = @user_list
+  unless @test_flag
+    store.transaction do
+      store[:trains] = @trains
+      store[:user_list] = @user_list
+      store[:shopping_cart] = @shopping_cart
+    end
   end
 end
 
@@ -27,9 +30,30 @@ require 'sinatra'
 
 configure do
   enable :sessions
-  set :trains, @trains
+  if @trains
+    set :trains, @trains
+  else
+    set :trains, @trains = Trains.new
+  end
   set :shopping_cart, @shopping_cart = Hash.new { |hash, key| hash[key] = Trains.new }
-  set :user_list, @user_list
+  if @user_list
+    set :user_list, @user_list
+  else
+    set :user_list, @user_list = UserList.new
+  end
+  @user_list.add(User.new('admin', 'admin'))
+end
+
+configure :test do
+  @test_flag = true
+  set :trains, @trains = Trains.new
+  @trains.add(Train.new(123, 'Ярославль', 'Тутаев', '19.06', '20.06', '13:20', '19:00', 1500))
+  @trains.add(Train.new(199, 'Москва', 'Ярославль', '19.06', '19.06', '17:20', '21:15', 850))
+  @trains.add(Train.new(103, 'Ярославль', 'Москва', '19.06', '19.06', '15:20', '19:00', 800))
+  @trains.add(Train.new(13, 'Москва', 'Ярославль', '19.06', '19.06', '13:20', '15:00', 750))
+  set :shopping_cart, @shopping_cart = Hash.new { |hash, key| hash[key] = Trains.new }
+  set :user_list, @user_list = UserList.new
+  @user_list.add(User.new('admin', 'admin'))
 end
 
 before do
@@ -135,12 +159,11 @@ get '/unlogin' do
 end
 
 post '/login' do
-  name = params['user']
-  password = params['password']
   users = settings.user_list
+  user = User.new(params['user'], params['password'])
 
-  if users.has_user?(User.new(name, password))
-    session[:user_id] = users.get_id(User.new(name, password))
+  if users.user?(user)
+    session[:user_id] = users.get_id(user)
     redirect('/tickets')
   end
   @errors = 'Такая пара имени пользователя и пароля не найдены'
@@ -156,7 +179,7 @@ post '/user/new' do
   users = settings.user_list
 
   user = User.new(params['user'], params['password'])
-  unless users.has_nickname?(user)
+  unless users.nickname?(user)
     settings.user_list.add(user)
     redirect to('/login')
   end

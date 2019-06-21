@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# check some information from fields
 module Checker
   def self.check_ticket_search_validaty(from, to, date_from, date_to, price_from, price_unto)
     @errors = []
@@ -20,11 +21,8 @@ module Checker
       @errors << 'неправильно указана цена в графе До' if (price_unto =~ /^[\d]+$/).nil?
     end
 
-    if @errors.empty?
-      return nil
-    else
-      return @errors
-    end
+    return nil if @errors.empty?
+    return @errors 
   end
 
   def self.date_checker(date)
@@ -33,7 +31,7 @@ module Checker
     day_month = date.split('.')
     day = day_month[0].to_i
     month = day_month[1].to_i
-    return false if day < 0 && month < 0 && month > 12 && day > 31
+    return false if day.negative? && month.negative? && month > 12 && day > 31
 
     true
   end
@@ -64,11 +62,8 @@ module Checker
 
     errors << 'неправильно указано время' if (d_time =~ /^[\d]+:[\d]+$/).nil? || (d_time =~ /^[\d][\d]?:[\d][\d]?$/).nil?
 
-    if errors.empty?
-      return nil
-    else
-      return errors
-    end
+    return nil if errors.empty?
+    return errors
   end
 
   def self.ckeck_option_fields(city, date)
@@ -77,10 +72,7 @@ module Checker
 
     errors << 'неправильно указана дата' if !date_checker(date)
 
-    if errors.empty?
-      return nil
-    else
-      return errors
-    end
+    return nil if errors.empty?     
+    return errors    
   end
 end

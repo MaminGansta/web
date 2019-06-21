@@ -9,7 +9,7 @@
 <% end %>
 
   <div class="form-row">
-    <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3">
       <label for="validationCustom01">Откуда:</label>
       <input type="text" class="form-control" id="from" name="from" placeholder="Ярославль(обязательно)" value="" required>
       <div class="valid-feedback">
@@ -68,10 +68,11 @@
         <h5 class="card-title"><%= train.d_time + " ------> " + train.a_time %></h5>
         <p class="card-text"><%= train.d_date %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= train.a_date %></p>
         <% if @user%>
-          <a href="/cart/add/<%= "#{train.id}" %>" class="btn btn-primary">Купить <%= "#{train.price}p" %></a>
+          <a href="/cart/add/<%= "#{train.id}" %>" class="btn btn-primary">Купить</a>
         <% else%>
-          <a href="/login" class="btn btn-primary">Купить <%= "#{train.price}p" %></a>
+          <a href="/login" class="btn btn-primary">Купить</a>
         <% end%>
+         <%= "#{train.price}p" %>
       </div>
     </div>
   <% end%>

@@ -4,11 +4,12 @@ require_relative '../trains'
 require_relative '../train'
 require_relative 'checker'
 
+# search trains for same conditions
 module Search
   def self.search_tickets(trains, from, to, date_from, date_to, price_from, price_unto)
     new_trains = Trains.new
     trains.each do |train|
-      next if train.depart != from && train.arrived != to
+      next if train.depart != from || train.arrived != to
       next if Checker.date_compare(train.d_date, date_from) == -1
 
       if !date_to.empty?
@@ -64,8 +65,8 @@ module Search
   def self.how_railways_need(trains, city, date)
     valid_trains = []
     trains.each do |train|
-      valid_trains << train if train.depart == city && Checker.date_compare(train.d_date, date) == 0
-      valid_trains << train if Checker.date_compare(train.a_date, date) == 0 && city == train.arrived
+      valid_trains << train if train.depart == city && Checker.date_compare(train.d_date, date).zero?
+      valid_trains << train if Checker.date_compare(train.a_date, date).zero? && city == train.arrived
     end
 
     if valid_trains.any?
@@ -90,6 +91,7 @@ module Search
             day_time[time - i] = 1
           end
           count += 1 if flag_for_count
+          flag_for_count = false
         end
       end
     else

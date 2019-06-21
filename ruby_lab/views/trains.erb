@@ -7,15 +7,16 @@
   </div>
 </div>
 
+<% if @trains%>
+  <% @trains.each do |train| %>
+      <div class="card" style="margin-top: 2%">
 
-<% @trains.each do |train| %>
-    <div class="card" style="margin-top: 2%">
-
-      <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>
-      <div class="card-body">
-        <h5 class="card-title"><%= train.d_time + " ------> " + train.a_time %></h5>
-        <p class="card-text"><%= train.d_date %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= train.a_date %></p>
-        <a href="/trains/del/<%= "#{train.id}" %>" class="btn btn-primary">Удалить</a>
+        <h5 class="card-header"><%= train.depart + " - " + train.arrived %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Номер поезда: <%= train.number%></h5>
+        <div class="card-body">
+          <h5 class="card-title"><%= train.d_time + " ------> " + train.a_time %></h5>
+          <p class="card-text"><%= train.d_date %>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= train.a_date %></p>
+          <a href="/trains/del/<%= "#{train.id}" %>" class="btn btn-primary">Удалить</a>
+        </div>
       </div>
-    </div>
+  <% end%>
 <% end%>

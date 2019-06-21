@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# conteiner for user
 class UserList
   def initialize
     @list = {}
@@ -7,10 +7,6 @@ class UserList
 
   def add(user)
     @list[user.id] = user
-  end
-
-  def del(user_id)
-    @list.delete(user_id)
   end
 
   def get(user_id)
@@ -24,14 +20,14 @@ class UserList
     nil
   end
 
-  def has_user?(user)
+  def user?(user)
     @list.values.each do |users_from_list|
       return true if users_from_list == user
     end
     false
   end
 
-  def has_nickname?(user)
+  def nickname?(user)
     @list.values.each do |users_from_list|
       return true if users_from_list.name == user.name
     end

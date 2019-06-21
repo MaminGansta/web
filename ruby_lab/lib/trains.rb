@@ -17,7 +17,7 @@ class Trains
   end
 
   def each(&block)
-    @trains.values.each(&block)
+    @trains.values.reverse_each(&block)
   end
 
   def get(id)

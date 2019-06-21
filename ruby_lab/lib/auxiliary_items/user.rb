@@ -2,6 +2,7 @@
 
 require 'securerandom'
 
+# discride user
 class User
   attr_reader :id, :name, :password
 
@@ -9,10 +10,11 @@ class User
     @name = name
     @password = password
     @id = SecureRandom.uuid
+    @session_ids = []
   end
 
-  def ==(other_user)
-    if @name == other_user.name && @password == other_user.password
+  def ==(other)
+    if @name == other.name && @password == other.password
       true
     else
       false
