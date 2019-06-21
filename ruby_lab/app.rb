@@ -97,10 +97,10 @@ get '/trains/del/:train_id' do |train_id|
 end
 
 post '/trains/new' do
-  @train = Train.new(params['input1'], params['input2'], params['input3'], params['input4'],
-                     params['input5'], params['input6'], params['input7'], params['input8'])
-  @errors = Checker.check_new_train_fields(params['input1'], params['input2'], params['input3'], params['input4'],
-                                           params['input5'], params['input6'], params['input7'], params['input8'])
+  @train = Train.new(params['number'], params['from'], params['to'], params['d_date'],
+                     params['a_date'], params['d_time'], params['a_time'], params['price'])
+  @errors = Checker.check_new_train_fields(params['number'], params['from'], params['to'], params['d_date'],
+                                           params['a_date'], params['d_time'], params['a_time'], params['price'])
   if !@errors
     settings.trains.add(@train)
     redirect('/trains')
@@ -140,9 +140,9 @@ post '/options' do
   @out = Search.search_dead_end(settings.trains) if params['radio'] == 'option1'
   @out = Search.citys_wits_trains(settings.trains) if params['radio'] == 'option2'
   if params['radio'] == 'option3'
-    @errors = Checker.ckeck_option_fields(params['input1'], params['input2'])
+    @errors = Checker.ckeck_option_fields(params['city'], params['date'])
     if !@errors
-      railways_in_city = Search.how_railways_need(settings.trains, params['input1'], params['input2'])
+      railways_in_city = Search.how_railways_need(settings.trains, params['city'], params['date'])
       @out = [railways_in_city]
     end
   end
